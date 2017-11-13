@@ -14,20 +14,20 @@ from PyQt5.QtGui import QPixmap
 These functions are basic image filters.
 """
 # def invertColor():    
-#     image= Image.open("meme.jpg") # Opens up picture.
+#     image = Image.open("meme.jpg") # Opens up picture.
 #     inverted_image = PIL.ImageOps.invert(image) #inverts the color.
 #     inverted_image.save("meme.jpg")# Result picture.
    
 # def blackAndWhite():
-#     image_file = Image.open("meme.jpg") #Opens up picture.
-#     image_file=image_file.convert('1')  #Converts image black to white.
+#     image = Image.open("meme.jpg") #Opens up picture.
+#     image_file = image.convert('1')  #Converts image black to white.
 #     image_file.save('meme.jpg') # Result picture.
 # """
 # This function overlays text on the meme image in white or black.
 
 # """
 
-def addText():
+def addText(self,meme):
     msg = "Enter Meme Captions"
     title = "MemeGenerator"
     textLabel = QLabel()
@@ -39,21 +39,29 @@ def addText():
     
     color = radioBtnState(white)
 
-                      
-    fieldNames = ["Top Caption", "Bottom Caption"]
-    fieldValues = []
-    fieldValues = multenterbox(msg, title, fieldNames)
+    topLabel = QLabel()
+    topLabel.setText("Top Caption")
+    topCap = QLineEdit()
+    btmLabel = QLabel()
+    btmLabel.setText("Bottom Caption")   
+    btmCap = QLineEdit()
+
+    text1 = topCap.text()
+    text2 = btmCap.text()
+
+    
     #Makes the text Upper Case
-    fieldValues[0] = fieldValues[0].upper()
-    fieldValues[1] = fieldValues[1].upper()
+    text1 = text1.upper()
+    text2 = text2.upper()
+
+
     
     # Centers text
-    meme = Image.open("copy.jpg")
     imageSize = meme.size
     fontSize = int(imageSize[1]/5)
     font = ImageFont.truetype("impact.ttf", fontSize)
-    topTextSize = font.getsize(fieldValues[0])
-    bottomTextSize = font.getsize(fieldValues[1])
+    topTextSize = font.getsize(text1)
+    bottomTextSize = font.getsize(text2)
     # Resizes text, if size of text is bigger than image
     while topTextSize[0] > imageSize[0] - 20 or bottomTextSize[0] > imageSize[0] - 20:
         fontSize = fontSize - 1
@@ -103,9 +111,14 @@ def radioBtnState(btn):
 # def confirmation():
 #     while True:
 #         meme = Image.open("meme.jpg")
-#         msgConfirm = "Do you like this picture?"
-#         ynChoices = ["Yes", "Redo Text", "Manipulate Colors", "No"]
-#         reply = buttonbox(msgConfirm, image="meme.jpg", choices=ynChoices)
+#         conLabel = QLabel()
+#		  conLabel.setText("Do you like the meme?")
+#		  chc1 = QRadioButton("Yes")
+#		  chc1.setChecked(True)
+#		  chc2 = QRadioButton("No")				
+#         chc3 = QRadioButton("Change Text")
+#         reply = chcBtnState(chc1)
+#
 #         if reply == ("Yes"):
 #             saveName = enterbox("What do you want to save the meme as?", "Meme Generator", "Save Name")
 #             meme.save(saveName + ".jpg")
@@ -117,12 +130,18 @@ def radioBtnState(btn):
 #         else:
 #             break
         
+def chcBtnState(btn):
+	if btn.text() == "Yes"
+		if btn.isChecked == True:
+			return "Yes"
+	if btn.text() == "No"
+		if btn.isChecked == True:
+			return "No"
+	if btn.text() == "Change Text"
+		if btn.isChecked == True:
+			return "Change Text"
+
 choices =['Awkward Moment Seal', 'Bad Luck Brian', 'Brace Yourself', 'Condescending Wonka', 'Desk Flip', 'Futurama Fry', 'Philosoraptor', 'Scumbag Steve', 'Success Kid', 'Create Your Own Meme']
-
-# meme = Image.open(memePath)
-# meme.save("copy.jpg") #Saves for further use
-# meme = Image.open("copy.jpg") #Allows the new meme to be used
-
 
 class Window(QWidget):
     def __init__(self):
@@ -150,12 +169,19 @@ class Window(QWidget):
         self.button.clicked.connect(self.btnstate)
         self.setLayout(h_layout)
 
+        
+
     def btnstate(self):
         if self.button.isChecked():
-            addText(self) 
-
-
-
+        	choice = self.my_combo_box.currentText()
+        	direct = "Memes/" + choice
+        	meme = Image.open(direct)
+			meme.save("copy.jpg") #Saves for further use
+			meme = Image.open("copy.jpg") #Allows the new meme to be used
+            addText(self,meme) 
+"""
+Setups app and starts event loop
+"""
 app = QApplication(sys.argv)
 main = Window()
 main.setWindowTitle("Meme Generator")
