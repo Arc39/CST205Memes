@@ -5,23 +5,18 @@ from PIL import ImageFilter
     Second parameter is a boolean specifiying how distorted the image is."""
 def deepfrier(image, doublefry=False):
     # Applies various filters to the image
-    print("Deep frying...")
     image = image.filter(ImageFilter.DETAIL)
     image = image.filter(ImageFilter.EDGE_ENHANCE_MORE)
     image = image.filter(ImageFilter.SHARPEN)
-    filename = "deepfried.jpg"
 
     # Adds an extra level of crispiness
     if doublefry is True:
         image = image.filter(ImageFilter.EDGE_ENHANCE_MORE)
-        filename = "extrafried.jpg"
 
-    image.save(filename)
-    print("Done.")
+    image.save("meme.jpg")
 
 """ Converts to grayscale """
 def grayscale(image):
-    print("Applying grayscale filter...")
     new_list = []
     newimage = Image.new("RGB", (image.width, image.height), "white")
     for p in image.getdata():
@@ -29,5 +24,8 @@ def grayscale(image):
         temp = (intensity, intensity, intensity)
         new_list.append(temp)
     newimage.putdata(new_list)
-    newimage.save("gray.jpg")
-    print("Done.")
+    newimage.save("meme.jpg")
+
+def invertColor(image):
+    inverted_image = PIL.ImageOps.invert(image) #inverts the color.
+    inverted_image.save("meme.jpg")# Result picture.

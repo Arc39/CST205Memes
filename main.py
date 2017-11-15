@@ -1,31 +1,16 @@
-from easygui import *
+# from easygui import *
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
-from PIL import ImageFilter
 import PIL.ImageOps
 import os
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit, QHBoxLayout, 
+from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit, QHBoxLayout,
 								QVBoxLayout, QComboBox, QPushButton, QRadioButton)
 from PyQt5.QtGui import QPixmap
 
-"""
-These functions are basic image filters.
-"""
-# def invertColor():    
-#     image = Image.open("meme.jpg") # Opens up picture.
-#     inverted_image = PIL.ImageOps.invert(image) #inverts the color.
-#     inverted_image.save("meme.jpg")# Result picture.
-   
-# def blackAndWhite():
-#     image = Image.open("meme.jpg") #Opens up picture.
-#     image_file = image.convert('1')  #Converts image black to white.
-#     image_file.save('meme.jpg') # Result picture.
-# """
-# This function overlays text on the meme image in white or black.
-
-# """
+""" Filter functions located in filters.py """
+from filters import grayscale, deepfrier, invertColor
 
 def addText(self,meme):
     msg = "Enter Meme Captions"
@@ -36,26 +21,26 @@ def addText(self,meme):
     white.setChecked(True)
 
     black = QRadioButton("Black")
-    
+
     color = radioBtnState(white)
 
     topLabel = QLabel()
     topLabel.setText("Top Caption")
     topCap = QLineEdit()
     btmLabel = QLabel()
-    btmLabel.setText("Bottom Caption")   
+    btmLabel.setText("Bottom Caption")
     btmCap = QLineEdit()
 
     text1 = topCap.text()
     text2 = btmCap.text()
 
-    
+
     #Makes the text Upper Case
     text1 = text1.upper()
     text2 = text2.upper()
 
 
-    
+
     # Centers text
     imageSize = meme.size
     fontSize = int(imageSize[1]/5)
@@ -80,7 +65,7 @@ def addText(self,meme):
     meme.save("meme.jpg")
 
 """
-This functions checks which radio button is selected 
+This functions checks which radio button is selected
 for color for the addText function and returns the colors value.
 """
 def radioBtnState(btn):
@@ -107,7 +92,7 @@ def radioBtnState(btn):
 # Asks user to confirm they like the meme they created.
 # Gives option to redo text or apply filters.
 # If yes meme is saved as user provided file name.
-# """            
+# """
 # def confirmation():
 #     while True:
 #         meme = Image.open("meme.jpg")
@@ -115,7 +100,7 @@ def radioBtnState(btn):
 #		  conLabel.setText("Do you like the meme?")
 #		  chc1 = QRadioButton("Yes")
 #		  chc1.setChecked(True)
-#		  chc2 = QRadioButton("No")				
+#		  chc2 = QRadioButton("No")
 #         chc3 = QRadioButton("Change Text")
 #         reply = chcBtnState(chc1)
 #
@@ -129,7 +114,7 @@ def radioBtnState(btn):
 #             colorManipulation()
 #         else:
 #             break
-        
+
 def chcBtnState(btn):
 	if btn.text() == "Yes"
 		if btn.isChecked == True:
@@ -151,7 +136,7 @@ class Window(QWidget):
         self.my_combo_box.addItems(choices)
         self.button = QPushButton("Select")
         self.button.setCheckable(True)
-        
+
         self.label = QLabel()
         self.label.setText("Select a meme background: ")
         self.imageLabel = QLabel()
@@ -160,7 +145,7 @@ class Window(QWidget):
         self.button.setMaximumHeight(25)
         self.button.setMaximumWidth(75)
         self.my_combo_box.setMaximumHeight(25)
-        
+
         h_layout.addWidget(self.label)
         h_layout.addWidget(self.my_combo_box)
         h_layout.addWidget(self.button)
@@ -169,7 +154,7 @@ class Window(QWidget):
         self.button.clicked.connect(self.btnstate)
         self.setLayout(h_layout)
 
-        
+
 
     def btnstate(self):
         if self.button.isChecked():
@@ -178,7 +163,7 @@ class Window(QWidget):
         	meme = Image.open(direct)
 			meme.save("copy.jpg") #Saves for further use
 			meme = Image.open("copy.jpg") #Allows the new meme to be used
-            addText(self,meme) 
+            addText(self,meme)
 """
 Setups app and starts event loop
 """
@@ -186,4 +171,4 @@ app = QApplication(sys.argv)
 main = Window()
 main.setWindowTitle("Meme Generator")
 main.show()
-sys.exit(app.exec_())		
+sys.exit(app.exec_())
