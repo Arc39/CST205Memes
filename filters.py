@@ -29,3 +29,20 @@ def grayscale(image):
 def invertColor(image):
     inverted_image = PIL.ImageOps.invert(image) #inverts the color.
     inverted_image.save("meme.jpg")# Result picture.
+
+""" Overlays emoji on picture. Takes an image, an emoji, coordinates at which to place the emoji,
+    and an optional scale to shrink the emoji by """
+    # Emoji list: emoji = ['100', 'B', 'Flame', 'Laughing', 'Okay']
+def overlayEmoji(image, emoji, coordinates, shrinkscale=2):
+    # makes path to emoji file and opens it
+    emojidirect = 'Emoji/' + emoji.lower() + "-emoji.png"
+    emojifile = Image.open(emojidirect)
+    emojifile.thumbnail((int(emojifile.width/shrinkscale), int(emojifile.height/shrinkscale)), Image.ANTIALIAS)
+
+    # finds center of emoji and computes new coordinates
+    emojicenter = (int(emojifile.width/2), int(emojifile.height/2))
+    coordinates = (coordinates[0] - emojicenter[0], coordinates[1] - emojicenter[1])
+
+    # pastes emoji over image and saves as new image
+    image.paste(emojifile, coordinates, emojifile)
+    image.save("meme.jpg")

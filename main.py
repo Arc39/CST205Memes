@@ -126,7 +126,10 @@ def chcBtnState(btn):
 		if btn.isChecked == True:
 			return "Change Text"
 
-choices =['Awkward Moment Seal', 'Bad Luck Brian', 'Brace Yourself', 'Condescending Wonka', 'Desk Flip', 'Futurama Fry', 'Philosoraptor', 'Scumbag Steve', 'Success Kid', 'Create Your Own Meme']
+choices =['Ancient Aliens', 'Awkward Moment Seal', 'Bad Luck Brian', 'Brace Yourself', 'But That\'s None of My Business',
+'Condescending Wonka', 'Desk Flip', 'Doge', 'Futurama Fry', 'Grumpy Cat', 'Matrix Morpheus', 'One Does Not Simply',
+'Philosoraptor', 'Really High Guy', 'Scumbag Steve', 'Success Kid', 'Third World Skeptical Kid', 'Too Damn High',
+'Y U No', 'Yo Dawg', 'Create Your Own Meme']
 
 class Window(QWidget):
     def __init__(self):
