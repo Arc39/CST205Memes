@@ -2,6 +2,7 @@
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
+import fontTemplate
 import PIL.ImageOps
 import os
 import sys
