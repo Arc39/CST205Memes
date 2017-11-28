@@ -13,27 +13,30 @@ from PyQt5.QtGui import QPixmap
 """ Filter functions located in filters.py """
 from filters import grayscale, deepfrier, invertColor
 
-def addText(self,meme):
-    msg = "Enter Meme Captions"
-    title = "MemeGenerator"
-    textLabel = QLabel()
-    textLabel.setText("White or black text?")
-    white = QRadioButton("White")
-    white.setChecked(True)
+class TextWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setMinimumSize(400,200)
+        self.textLabel = QLabel()
+        self.textLabel.setText("White or black text?")
+        
+        self.white = QRadioButton("White")
+        self.white.setChecked(True)
 
-    black = QRadioButton("Black")
+        self.black = QRadioButton("Black")
 
-    color = radioBtnState(white)
+        color = radioBtnState(self.white)
 
-    topLabel = QLabel()
-    topLabel.setText("Top Caption")
-    topCap = QLineEdit()
-    btmLabel = QLabel()
-    btmLabel.setText("Bottom Caption")
-    btmCap = QLineEdit()
+        self.topLabel = QLabel()
+        self.topLabel.setText("Top Caption")
+        self.topCap = QLineEdit()
+        self.btmLabel = QLabel()
+        self.btmLabel.setText("Bottom Caption")
+        self.btmCap = QLineEdit()
 
-    text1 = topCap.text()
-    text2 = btmCap.text()
+def addText(self,meme,textLabel,white,black,topLabel,topCap,btmCap,btmLabel):
+    text1 = self.topCap.text()
+    text2 = self.btmCap.text()
 
 
     #Makes the text Upper Case
@@ -70,10 +73,10 @@ This functions checks which radio button is selected
 for color for the addText function and returns the colors value.
 """
 def radioBtnState(btn):
-	if btn.text() == "White"
+	if btn.text() == "White":
 		if btn.isChecked == True:
 			return 255
-	if btn.text() == "Black"
+	if btn.text() == "Black":
 		if btn.isChecked == True:
 			return 0
 # """
@@ -117,13 +120,13 @@ def radioBtnState(btn):
 #             break
 
 def chcBtnState(btn):
-	if btn.text() == "Yes"
+	if btn.text() == "Yes":
 		if btn.isChecked == True:
 			return "Yes"
-	if btn.text() == "No"
+	if btn.text() == "No":
 		if btn.isChecked == True:
 			return "No"
-	if btn.text() == "Change Text"
+	if btn.text() == "Change Text":
 		if btn.isChecked == True:
 			return "Change Text"
 
@@ -162,12 +165,20 @@ class Window(QWidget):
 
     def btnstate(self):
         if self.button.isChecked():
-        	choice = self.my_combo_box.currentText()
-        	direct = "Memes/" + choice
-        	meme = Image.open(direct)
-			meme.save("copy.jpg") #Saves for further use
-			meme = Image.open("copy.jpg") #Allows the new meme to be used
-            addText(self,meme)
+            choice = self.my_combo_box.currentText()
+            direct = "Memes/" + choice + ".jpg"
+            meme = Image.open(direct)
+            meme.save("copy.jpg") #Saves for further use
+            meme = Image.open("copy.jpg") #Allows the new meme to be used
+            print("AFTER MEME FILE")
+            self.update_ui(meme)
+
+    """Trying to create new window here"""
+    def update_ui(self,meme):
+        self.new_win = TextWindow()
+        print("TESTING")
+        self.new_win.show()
+        addText(meme,textLabel,white,black,topLabel,topCap,btmCap,btmLabel)
 """
 Setups app and starts event loop
 """
