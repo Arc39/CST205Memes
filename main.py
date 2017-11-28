@@ -13,10 +13,14 @@ from PyQt5.QtGui import QPixmap
 """ Filter functions located in filters.py """
 from filters import grayscale, deepfrier, invertColor
 
+
+"""Text and caption selection window, still needs the font choices, submit button, 
+image effects, and a better looking layout"""
 class TextWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setMinimumSize(400,200)
+        self.setWindowTitle("Meme Generator")
         self.textLabel = QLabel()
         self.textLabel.setText("White or black text?")
         
@@ -34,9 +38,25 @@ class TextWindow(QWidget):
         self.btmLabel.setText("Bottom Caption")
         self.btmCap = QLineEdit()
 
-def addText(self,meme,textLabel,white,black,topLabel,topCap,btmCap,btmLabel):
-    text1 = self.topCap.text()
-    text2 = self.btmCap.text()
+        h_layout = QHBoxLayout()
+        v_layout = QVBoxLayout()
+        v2_layout = QVBoxLayout()
+        v2_layout.addWidget(self.textLabel)
+        v2_layout.addWidget(self.white)
+        v2_layout.addWidget(self.black)
+        v_layout.addWidget(self.topLabel)
+        v_layout.addWidget(self.topCap)
+        v_layout.addWidget(self.btmLabel)
+        v_layout.addWidget(self.btmCap)
+        h_layout.addLayout(v2_layout)
+        h_layout.addLayout(v_layout)
+        self.setLayout(h_layout)
+
+
+def addText(self,meme,white,black,topCap,btmCap):
+    
+    text1 = topCap.text()
+    text2 = btmCap.text()
 
 
     #Makes the text Upper Case
@@ -170,15 +190,12 @@ class Window(QWidget):
             meme = Image.open(direct)
             meme.save("copy.jpg") #Saves for further use
             meme = Image.open("copy.jpg") #Allows the new meme to be used
-            print("AFTER MEME FILE")
             self.update_ui(meme)
 
-    """Trying to create new window here"""
     def update_ui(self,meme):
         self.new_win = TextWindow()
-        print("TESTING")
         self.new_win.show()
-        addText(meme,textLabel,white,black,topLabel,topCap,btmCap,btmLabel)
+        #addText(self,meme,self.new_win.white,self.new_win.black,self.new_win.topCap,self.new_win.btmCap)
 """
 Setups app and starts event loop
 """
