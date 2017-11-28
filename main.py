@@ -38,6 +38,10 @@ class TextWindow(QWidget):
         self.btmLabel.setText("Bottom Caption")
         self.btmCap = QLineEdit()
 
+        self.textButton = QPushButton("Submit")
+        self.textButton.setCheckable(True)
+        self.textButton.clicked.connect(self.btnstate)
+
         h_layout = QHBoxLayout()
         v_layout = QVBoxLayout()
         v2_layout = QVBoxLayout()
@@ -48,10 +52,15 @@ class TextWindow(QWidget):
         v_layout.addWidget(self.topCap)
         v_layout.addWidget(self.btmLabel)
         v_layout.addWidget(self.btmCap)
+        v_layout.addWidget(self.textButton)
         h_layout.addLayout(v2_layout)
         h_layout.addLayout(v_layout)
         self.setLayout(h_layout)
 
+    def btnstate(self):
+        if self.textButton.isChecked():
+            print("hi")
+            #addText()
 
 def addText(self,meme,white,black,topCap,btmCap):
     
@@ -195,7 +204,8 @@ class Window(QWidget):
     def update_ui(self,meme):
         self.new_win = TextWindow()
         self.new_win.show()
-        #addText(self,meme,self.new_win.white,self.new_win.black,self.new_win.topCap,self.new_win.btmCap)
+
+        
 """
 Setups app and starts event loop
 """
