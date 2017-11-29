@@ -1,3 +1,5 @@
-# Meme Generator (CST205)
-Meme Generator is a CST 205 Group Project from the Fall 2017 semester. It is a desktop GUI developed by Kara Spencer, Carlos Estrada, and Jacob Gull.
-The goal of this project is to allow fellow meme lovers around the world to create their own classic memes. Users will be able to choose or upload an image, apply filter, and add custom text.
+# Meme Generator (CST 205)
+### *"Make memes, not war." – Mark Twain*
+Meme Generator is a CST 205 group project created in Fall 2017. It is developed by Kara Spencer, Carlos Estrada, and Jacob Gull.
+
+Created for our fellow lovers and creators of dank memes, Meme Generator allows users to craft their own masterpieces using meme templates, filters, and custom text. For those looking for some extra spiciness, users can also upload their own meme images as well.
