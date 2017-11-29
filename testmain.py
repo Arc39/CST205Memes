@@ -89,7 +89,7 @@ class MainWindow(QWidget):
 class Customizer(QWidget):
     def __init__(self, meme):
         super().__init__()
-        self.setFixedSize(500,300)
+        self.setFixedSize(600,400)
         self.setWindowTitle("Customizer")
         self.meme = meme
         mainQVBox = QVBoxLayout()
