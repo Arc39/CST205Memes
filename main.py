@@ -2,13 +2,15 @@
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
-import fontTemplate
 import PIL.ImageOps
 import os
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit, QHBoxLayout,
 								QVBoxLayout, QComboBox, QPushButton, QRadioButton)
 from PyQt5.QtGui import QPixmap
+
+"""Font functions found in fontTemplate.py"""
+import fontTemplate
 from PyQt5.QtCore import pyqtSlot
 
 """ Filter functions located in filters.py """
