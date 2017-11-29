@@ -9,12 +9,13 @@ import sys
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit, QHBoxLayout,
 								QVBoxLayout, QComboBox, QPushButton, QRadioButton)
 from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import pyqtSlot
 
 """ Filter functions located in filters.py """
 from filters import grayscale, deepfrier, invertColor
 
 
-"""Text and caption selection window, still needs the font choices, submit button, 
+"""Text and caption selection window, still needs the font choices, submit button,
 image effects, and a better looking layout"""
 class TextWindow(QWidget):
     def __init__(self):
@@ -23,7 +24,7 @@ class TextWindow(QWidget):
         self.setWindowTitle("Meme Generator")
         self.textLabel = QLabel()
         self.textLabel.setText("White or black text?")
-        
+
         self.white = QRadioButton("White")
         self.white.setChecked(True)
 
@@ -37,6 +38,10 @@ class TextWindow(QWidget):
         self.btmLabel = QLabel()
         self.btmLabel.setText("Bottom Caption")
         self.btmCap = QLineEdit()
+
+		#Font button
+        self.my_button = QPushButton(f"Font")
+        self.my_button.clicked.connect(self.on_click)
 
         self.textButton = QPushButton("Submit")
         self.textButton.setCheckable(True)
@@ -52,18 +57,27 @@ class TextWindow(QWidget):
         v_layout.addWidget(self.topCap)
         v_layout.addWidget(self.btmLabel)
         v_layout.addWidget(self.btmCap)
+        v_layout.addWidget(self.my_button)
         v_layout.addWidget(self.textButton)
         h_layout.addLayout(v2_layout)
         h_layout.addLayout(v_layout)
         self.setLayout(h_layout)
 
+    @pyqtSlot()
+    def on_click(self):
+        global Font
+        Font = fontTemplate.openFontDialog(self)
+
+
     def btnstate(self):
         if self.textButton.isChecked():
             print("hi")
+            print(Font.toString())
+			#just add Font as the last parameter for user font
             #addText()
 
-def addText(self,meme,white,black,topCap,btmCap):
-    
+def addText(self,meme,white,black,topCap,btmCap,imgFont):
+
     text1 = topCap.text()
     text2 = btmCap.text()
 
@@ -77,7 +91,7 @@ def addText(self,meme,white,black,topCap,btmCap):
     # Centers text
     imageSize = meme.size
     fontSize = int(imageSize[1]/5)
-    font = ImageFont.truetype("impact.ttf", fontSize)
+    font = imgFont # This is the font the user chose
     topTextSize = font.getsize(text1)
     bottomTextSize = font.getsize(text2)
     # Resizes text, if size of text is bigger than image
@@ -205,7 +219,7 @@ class Window(QWidget):
         self.new_win = TextWindow()
         self.new_win.show()
 
-        
+
 """
 Setups app and starts event loop
 """

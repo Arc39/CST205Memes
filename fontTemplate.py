@@ -13,4 +13,4 @@ class App(QWidget):
 def openFontDialog(self):
     font, ok = QFontDialog.getFont()
     if ok:
-        print(font.toString())
+        return font
