@@ -20,8 +20,9 @@ from filters import grayscale, deepfrier, invertColor
 """Text and caption selection window, still needs the font choices, submit button,
 image effects, and a better looking layout"""
 class TextWindow(QWidget):
-    def __init__(self):
+    def __init__(self,meme):
         super().__init__()
+        self.meme = meme
         self.setMinimumSize(400,200)
         self.setWindowTitle("Meme Generator")
         self.textLabel = QLabel()
@@ -74,9 +75,9 @@ class TextWindow(QWidget):
     def btnstate(self):
         if self.textButton.isChecked():
             print("hi")
-            print(Font.toString())
+            print(Font)
 			#just add Font as the last parameter for user font
-            #addText()
+            addText(self,self.meme,self.white,self.black,self.topCap,self.btmCap,Font)
 
 def addText(self,meme,white,black,topCap,btmCap,imgFont):
 
@@ -94,12 +95,12 @@ def addText(self,meme,white,black,topCap,btmCap,imgFont):
     imageSize = meme.size
     fontSize = int(imageSize[1]/5)
     font = imgFont # This is the font the user chose
-    topTextSize = font.getsize(text1)
-    bottomTextSize = font.getsize(text2)
+    topTextSize = font.pointSize()
+    bottomTextSize = font.pointSize()
     # Resizes text, if size of text is bigger than image
     while topTextSize[0] > imageSize[0] - 20 or bottomTextSize[0] > imageSize[0] - 20:
         fontSize = fontSize - 1
-        font = ImageFont.truetype("impact.ttf", fontSize)
+        font = ImageFont.truetype(imgFont, fontSize)
         topTextSize = font.getsize(fieldValues[0])
         bottomTextSize = font.getsize(fieldValues[1])
 
@@ -137,32 +138,6 @@ def radioBtnState(btn):
 #         blackAndWhite()
 
 
-# """
-# Asks user to confirm they like the meme they created.
-# Gives option to redo text or apply filters.
-# If yes meme is saved as user provided file name.
-# """
-# def confirmation():
-#     while True:
-#         meme = Image.open("meme.jpg")
-#         conLabel = QLabel()
-#		  conLabel.setText("Do you like the meme?")
-#		  chc1 = QRadioButton("Yes")
-#		  chc1.setChecked(True)
-#		  chc2 = QRadioButton("No")
-#         chc3 = QRadioButton("Change Text")
-#         reply = chcBtnState(chc1)
-#
-#         if reply == ("Yes"):
-#             saveName = enterbox("What do you want to save the meme as?", "Meme Generator", "Save Name")
-#             meme.save(saveName + ".jpg")
-#             break
-#         elif reply == ("Redo Text"):
-#             text()
-#         elif reply == ("Manipulate Colors"):
-#             colorManipulation()
-#         else:
-#             break
 
 def chcBtnState(btn):
 	if btn.text() == "Yes":
@@ -218,7 +193,7 @@ class Window(QWidget):
             self.update_ui(meme)
 
     def update_ui(self,meme):
-        self.new_win = TextWindow()
+        self.new_win = TextWindow(meme)
         self.new_win.show()
 
 

@@ -1,4 +1,5 @@
 from PIL import Image
+from PIL import ImageOps
 from PIL import ImageFilter
 
 filterlist = ["Choose a filter: ", "Deep Frier", "Grayscale", "Inverted", "Emoji"]
@@ -23,7 +24,7 @@ def grayscale(image):
     newimage.save("meme.jpg")
 
 def invertColor(image):
-    inverted_image = PIL.ImageOps.invert(image) #inverts the color.
+    inverted_image = ImageOps.invert(image) #inverts the color.
     inverted_image.save("meme.jpg")# Result picture.
 
 """ Overlays emoji on picture. Takes an image, an emoji, coordinates at which to place the emoji,

@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit, QHBoxLayo
 							QVBoxLayout, QComboBox, QPushButton, QRadioButton, QGroupBox, QFontDialog)
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt, pyqtSlot
+from PIL import Image, ImageFilter, ImageOps
 from filters import * # Filter functions located in filters.py
 import os, sys
 
@@ -151,21 +152,38 @@ class Customizer(QWidget):
 
     """ Allows users to add filters with dropdown menu """
     def filterEdit(self):
+
         self.QGroupFilter = QGroupBox("Filters")
         vBox = QVBoxLayout()
         hBox = QHBoxLayout()
 
-        optionBox = QComboBox()
-        optionBox.addItems(filterlist)
-        optionBox.setMaximumWidth(300)
-
-        applybtn = QPushButton("Apply")
-        applybtn.setMaximumWidth(100)
-        hBox.addWidget(optionBox)
-        hBox.addWidget(applybtn)
+        self.optionBox = QComboBox()
+        self.optionBox.addItems(filterlist)
+        self.optionBox.setMaximumWidth(300)
+        self.applybtn = QPushButton("Apply",self)
+        self.applybtn.setMaximumWidth(100)
+        hBox.addWidget(self.optionBox)
+        hBox.addWidget(self.applybtn)
 
         vBox.addLayout(hBox)
         self.QGroupFilter.setLayout(vBox)
+
+        self.applybtn.clicked.connect(self.onClick)
+    @pyqtSlot()
+    def onClick(self):
+        aFilter = self.optionBox.currentText()
+        meme = Image.open("copy.jpg")
+        if aFilter == "Choose a filter: ":
+            return
+        if aFilter == "Deep Frier":
+            deepfrier(meme)
+        if aFilter == "Grayscale":
+            grayscale(meme)
+        if aFilter == "Inverted":
+            invertColor(meme)
+        if aFilter == "Emoji":
+            # emoji(meme) #This needs more info
+            print("still In progress")
 
     def radioBtnState(self, btn):
     	if btn.text() == "White":
