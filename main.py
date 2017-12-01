@@ -94,7 +94,7 @@ def addText(self,meme,white,black,topCap,btmCap,imgFont):
     # Centers text
     imageSize = meme.size
     fontSize = int(imageSize[1]/5)
-    font = imgFont # This is the font the user chose
+    # font = imgFont # This is the font the user chose
     topTextSize = font.pointSize()
     bottomTextSize = font.pointSize()
     # Resizes text, if size of text is bigger than image
