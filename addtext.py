@@ -37,4 +37,4 @@ def addText(topCap,bottomCap,imgFont,color):
 
 	drawTop.text((topTextPosX,0), text1, color, font=font) #(location, string, color, font)
 	drawBottom.text((bottomTextPosX,bottomTextPosY), text2,color, font=font)
-	meme.save("meme.jpg")
+	return meme

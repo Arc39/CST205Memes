@@ -204,12 +204,12 @@ class Customizer(QWidget):
 
 		if self.fontCombo.currentText() != fonts[0]:
 			FontChoice = getFont(self.fontCombo.currentText())
-			addText(self.topCap,self.bottomCap,FontChoice,color)
+			self.final = addText(self.topCap,self.bottomCap,FontChoice,color)
 
 		fileName, ignore = QFileDialog.getSaveFileName(self,"Save Meme")
 		if ".jpg" not in fileName:
 			fileName += ".jpg"
-		self.meme.save(fileName) # saves image to selected directory and adds extension
+		self.final.save(fileName) # saves image to selected directory and adds extension
 
 app = QApplication(sys.argv)
 main = MainWindow()
