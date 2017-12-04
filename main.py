@@ -1,8 +1,9 @@
 """
 https://github.com/Arc39/CST205Memes
-Carlos Estrada
-Jacob Gull
-Kara Spencer
+Carlos Estrada, Jacob Gull, Kara Spencer
+CST205 Fall 2017
+Meme Generator - PyQt5 GUI program to make your own custom meme.
+
 """
 
 from PIL import Image, ImageDraw, ImageFont, ImageOps
@@ -11,9 +12,7 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit, QHBoxLayo
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt, pyqtSlot
 from PIL import Image, ImageFilter, ImageOps
-from filters import * # Filter functions located in filters.py
-from fontTemplate import *
-from addtext import addText
+from functions import *
 import os, sys
 
 # meme choices dropdown list

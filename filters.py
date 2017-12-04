@@ -1,3 +1,10 @@
+"""
+https://github.com/Arc39/CST205Memes
+Carlos Estrada
+Jacob Gull
+Kara Spencer
+"""
+
 from PIL import Image
 from PIL import ImageOps
 from PIL import ImageFilter
