@@ -115,9 +115,9 @@ class Customizer(QWidget):
 		self.QGroupFont = QGroupBox("Font Options")
 		hBox = QHBoxLayout()
 		gLayout = QGridLayout()
-		self.fontButton = QPushButton("Choose Font")
+		self.fontButton = QComboBox("Choose Font")
 		self.fontButton.setMaximumWidth(200)
-		self.fontButton.clicked.connect(self.chooseFont)
+
 
 		self.fontColorLabel = QLabel("Font Color:")
 		self.fontColorLabel.setAlignment(Qt.AlignCenter)
@@ -196,18 +196,15 @@ class Customizer(QWidget):
 			print("BLACK")
 			return ((0,0,0))
 
-	def chooseFont(self):
-		global Font
-		Font, ok = QFontDialog.getFont()
-		self.fontName = Font.family()
-		self.fontStyle = Font.weight()
-		self.fontSize = Font.pointSize()
-		self.fontButton.setText(f"{Font.family()} ({Font.pointSize()} pt)")
+	def chooseFont(self,aFont):
+		Font = aFont
+		
 
 	def saveImage(self):
 		global color
 		color = self.radioBtnState(self.colorButton,self.colorButton2)
 		print("COLOR:", color)
+		FontChoice = chooseFont(self.fontButton.currentText())
 		addText(self.topCap,self.bottomCap,Font,color)
 		fileName, ignore = QFileDialog.getSaveFileName(self,"Save Meme")
 		if ".jpg" not in fileName:
