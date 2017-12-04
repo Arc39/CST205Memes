@@ -20,21 +20,21 @@ def addText(topCap,bottomCap,imgFont,color):
 	text1 = text1.upper()
 	text2 = text2.upper()
 
-	font = ImageFont.truetype("impact.ttf", fontSize)
+	font = ImageFont.truetype(imgFont, fontSize)
 
 	textSize = drawTop.textsize(text1,font)
 	textSize2 = drawBottom.textsize(text2, font)
 
 	while textSize[0] > imageSize[0] - 20 or textSize2[0] > imageSize[0] - 20:
 		fontSize = fontSize - 1
-		font = ImageFont.truetype("impact.ttf", fontSize)
+		font = ImageFont.truetype(imgFont, fontSize)
 		textSize = text1.textsize(text1,font)
 		textSize2 = text2.textsize(text2, font)
 
 	topTextPosX = (imageSize[0]/2) - (textSize[0]/2)
 	bottomTextPosX = (imageSize[0]/2) - (textSize2[0]/2)
 	bottomTextPosY = (imageSize[1] - textSize2[1]- 10)
-	
+
 	drawTop.text((topTextPosX,0), text1, color, font=font) #(location, string, color, font)
 	drawBottom.text((bottomTextPosX,bottomTextPosY), text2,color, font=font)
 	meme.save("meme.jpg")

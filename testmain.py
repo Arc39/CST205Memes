@@ -5,7 +5,7 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt, pyqtSlot
 from PIL import Image, ImageFilter, ImageOps
 from filters import * # Filter functions located in filters.py
-import fontTemplate
+from fontTemplate import *
 from addtext import addText
 import os, sys
 
@@ -115,8 +115,9 @@ class Customizer(QWidget):
 		self.QGroupFont = QGroupBox("Font Options")
 		hBox = QHBoxLayout()
 		gLayout = QGridLayout()
-		self.fontButton = QComboBox("Choose Font")
-		self.fontButton.setMaximumWidth(200)
+		self.fontCombo = QComboBox()
+		self.fontCombo.addItems(fonts)
+		self.fontCombo.setMaximumWidth(200)
 
 
 		self.fontColorLabel = QLabel("Font Color:")
@@ -129,7 +130,7 @@ class Customizer(QWidget):
 		self.colorButton2 = QRadioButton("Black")
 		gLayout.addWidget(self.colorButton2, 0, 1)
 
-		hBox.addWidget(self.fontButton)
+		hBox.addWidget(self.fontCombo)
 		hBox.addWidget(self.fontColorLabel)
 		hBox.addLayout(gLayout)
 		self.QGroupFont.setLayout(hBox)
@@ -196,16 +197,15 @@ class Customizer(QWidget):
 			print("BLACK")
 			return ((0,0,0))
 
-	def chooseFont(self,aFont):
-		Font = aFont
-		
-
 	def saveImage(self):
 		global color
 		color = self.radioBtnState(self.colorButton,self.colorButton2)
 		print("COLOR:", color)
-		FontChoice = chooseFont(self.fontButton.currentText())
-		addText(self.topCap,self.bottomCap,Font,color)
+
+		if self.fontCombo.currentText() != fonts[0]:
+			FontChoice = getFont(self.fontCombo.currentText())
+			addText(self.topCap,self.bottomCap,FontChoice,color)
+
 		fileName, ignore = QFileDialog.getSaveFileName(self,"Save Meme")
 		if ".jpg" not in fileName:
 			fileName += ".jpg"

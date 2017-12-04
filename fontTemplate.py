@@ -1,13 +1,6 @@
-from PyQt5.QtWidgets import QWidget, QFontDialog
-from PyQt5.QtCore import pyqtSlot
+fonts = ["Choose a font: ", "Arial Bold", "Comic Sans", "Impact", "Pixel", "Webdings"]
 
-class App(QWidget):
-
-    @pyqtSlot()
-    def on_click(self):
-        openFontDialog(self)
-        
-def openFontDialog(self):
-    font, ok = QFontDialog.getFont()
-    if ok:
-        return font
+def getFont(fontChoice):
+    for font in fonts:
+        if font == fontChoice:
+            return font + ".ttf"
