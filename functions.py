@@ -12,7 +12,8 @@ from PIL import ImageFont
 from PIL import ImageOps
 from PIL import ImageFilter
 
-""" Gets font to use on meme """
+""" Gets font to use on meme
+    Note: Webdings purposely doesn't work """
 fonts = ["Choose a font: ", "Arial Bold", "Comic Sans", "Impact", "Pixel", "Webdings"]
 def getFont(fontChoice):
     for font in fonts:
@@ -27,7 +28,7 @@ def deepfrier(image):
     image = image.filter(ImageFilter.DETAIL)
     image = image.filter(ImageFilter.EDGE_ENHANCE_MORE)
     image = image.filter(ImageFilter.SHARPEN)
-    image.save("meme.jpg")
+    image.save("copy.jpg")
 
 """ Converts to grayscale """
 def grayscale(image):
@@ -38,11 +39,12 @@ def grayscale(image):
         temp = (intensity, intensity, intensity)
         new_list.append(temp)
     newimage.putdata(new_list)
-    newimage.save("meme.jpg")
-"""Applys inverted color effect to image """
+    newimage.save("copy.jpg")
+
+"""Applies inverted color effect to image """
 def invertColor(image):
     inverted_image = ImageOps.invert(image) #inverts the color.
-    inverted_image.save("meme.jpg")# Result picture.
+    inverted_image.save("copy.jpg")# Result picture.
 
 
 """
@@ -51,7 +53,7 @@ There is a top caption and bottom caption for text.
 """
 
 def addText(topCap,bottomCap,imgFont,color):
-	meme = Image.open("meme.jpg")
+	meme = Image.open("copy.jpg")
 	imageSize = meme.size
 	w, h = imageSize
 	fontSize = int(imageSize[1]/5)
@@ -59,11 +61,9 @@ def addText(topCap,bottomCap,imgFont,color):
 	drawTop = ImageDraw.Draw(meme)
 	drawBottom = ImageDraw.Draw(meme)
 
-	text1 = topCap.text()
-	text2 = bottomCap.text()
-	#Makes the text Upper Case
-	text1 = text1.upper()
-	text2 = text2.upper()
+    # Gets text from line edit and makes it Upper Case
+	text1 = topCap.text().upper()
+	text2 = bottomCap.text().upper()
 
 	font = ImageFont.truetype(imgFont, fontSize)
 
@@ -73,8 +73,8 @@ def addText(topCap,bottomCap,imgFont,color):
 	while textSize[0] > imageSize[0] - 20 or textSize2[0] > imageSize[0] - 20:
 		fontSize = fontSize - 1
 		font = ImageFont.truetype(imgFont, fontSize)
-		textSize = text1.textsize(text1,font)
-		textSize2 = text2.textsize(text2, font)
+		textSize = drawTop.textsize(text1,font)
+		textSize2 = drawBottom.textsize(text2, font)
 
 	topTextPosX = (imageSize[0]/2) - (textSize[0]/2)
 	bottomTextPosX = (imageSize[0]/2) - (textSize2[0]/2)
