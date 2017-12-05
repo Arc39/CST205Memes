@@ -20,7 +20,7 @@ def getFont(fontChoice):
         if font == fontChoice:
             return "Font/" + font + ".ttf"
 
-filterlist = ["Choose a filter: ", "Deep Frier", "Grayscale", "Inverted", "Emoji"]
+filterlist = ["Choose a filter: ", "Deep Frier", "Grayscale", "Inverted"]
 
 """ Deep fries images """
 def deepfrier(image):

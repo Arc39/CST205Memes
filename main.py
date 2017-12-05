@@ -81,7 +81,7 @@ class MainWindow(QWidget):
 			meme = Image.open(fileName) # opens image from directory
 			meme.save("copy.jpg")
 			self.meme = Image.open("copy.jpg")
-			self.customize = Customizer()
+			self.customize = Customizer(meme)
 			self.customize.show()
 
 	""" Opens an image from the meme dropdown list """
@@ -124,7 +124,7 @@ class Customizer(QWidget):
 		self.fontCombo = QComboBox()
 		self.fontCombo.addItems(fonts)
 		self.fontCombo.setMaximumWidth(200)
-
+		self.fontCombo.currentIndexChanged.connect(self.toggleLineEdit)
 
 		self.fontColorLabel = QLabel("Font Color:")
 		self.fontColorLabel.setAlignment(Qt.AlignCenter)
@@ -149,10 +149,14 @@ class Customizer(QWidget):
 		self.topCap = QLineEdit()
 		self.topCap.setPlaceholderText("Top Caption")
 		self.topCap.setMaximumWidth(400)
+		self.topCap.setEnabled(False)
+		self.topCap.textChanged.connect(self.toggleSave)
 
 		self.bottomCap = QLineEdit()
 		self.bottomCap.setPlaceholderText("Bottom Caption")
 		self.bottomCap.setMaximumWidth(400)
+		self.bottomCap.setEnabled(False)
+		self.bottomCap.textChanged.connect(self.toggleSave)
 
 		vBox.addWidget(self.topCap)
 		vBox.addWidget(self.bottomCap)
@@ -176,48 +180,79 @@ class Customizer(QWidget):
 
 		vBox.addLayout(hBox)
 		self.QGroupFilter.setLayout(vBox)
-
 		self.applybtn.clicked.connect(self.onClick)
+
 	@pyqtSlot()
 	def onClick(self):
 		aFilter = self.optionBox.currentText()
 		meme = Image.open("copy.jpg")
 		if aFilter == "Choose a filter: ":
-			return
-		if aFilter == "Deep Frier":
+			pass
+		elif aFilter == "Deep Frier":
 			deepfrier(meme)
-		if aFilter == "Grayscale":
+		elif aFilter == "Grayscale":
 			grayscale(meme)
-		if aFilter == "Inverted":
+		elif aFilter == "Inverted":
 			invertColor(meme)
-		if aFilter == "Emoji":
-			# emoji(meme) #This needs more info
-			print("still In progress")
+
+	@pyqtSlot()
+	def toggleLineEdit(self):
+		# enables line edit only if a font is selected
+		currentFont = self.fontCombo.currentText()
+		if currentFont != fonts[0]:
+			self.topCap.setEnabled(True)
+			self.bottomCap.setEnabled(True)
+			self.savebtn.setEnabled(False)
+			self.savebtn.setText("Add captions or deselect your font to save.")
+		else:
+			self.topCap.setEnabled(False)
+			self.bottomCap.setEnabled(False)
+			self.savebtn.setEnabled(True)
+			self.savebtn.setText("Save...")
+
+	@pyqtSlot()
+	def toggleSave(self):
+		# enables save button if font is not selected OR captions have text
+		top = self.topCap.text()
+		bottom = self.bottomCap.text()
+		if len(top) != 0 and len(bottom) != 0:
+			self.savebtn.setEnabled(True)
+			self.savebtn.setText("Save...")
+		else:
+			self.savebtn.setEnabled(False)
+			self.savebtn.setText("Add captions or deselect your font to save.")
 
 	def radioBtnState(self,radiobutton,radiobutton2):
-		#radiobutton = self.sender()
 		if radiobutton.isChecked() == True:
-			print("WHITE")
-			return ((255,255,255))
+			return (255,255,255) # WHITE
 		if radiobutton2.isChecked() == True:
-			print("BLACK")
-			return ((0,0,0))
+			return (0,0,0) # BLACK
 
 	def saveImage(self):
 		global color
-		color = self.radioBtnState(self.colorButton,self.colorButton2)
-		print("COLOR:", color)
 
+		# only runs text functions if a font is selected
 		if self.fontCombo.currentText() != fonts[0]:
+			color = self.radioBtnState(self.colorButton,self.colorButton2)
 			FontChoice = getFont(self.fontCombo.currentText())
 			self.final = addText(self.topCap,self.bottomCap,FontChoice,color)
+		else:
+			self.final = self.meme
 
-		fileName, ignore = QFileDialog.getSaveFileName(self,"Save Meme")
-		if ".jpg" not in fileName:
-			fileName += ".jpg"
-		self.final.save(fileName) # saves image to selected directory and adds extension
+		try:
+			fileName, ignore = QFileDialog.getSaveFileName(self,"Save Meme")
+			if ".jpg" not in fileName:
+				fileName += ".jpg"
+			self.final.save(fileName) # saves image to selected directory and adds extension
+		except:
+			pass
 
-app = QApplication(sys.argv)
-main = MainWindow()
-main.show()
-sys.exit(app.exec_())
+""" Custom app execution """
+def appExec():
+	app = QApplication(sys.argv)
+	main = MainWindow()
+	main.show()
+	app.exec_()
+	os.remove("copy.jpg") # removes image copy on exit
+
+sys.exit(appExec())
