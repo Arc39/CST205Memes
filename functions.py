@@ -14,7 +14,7 @@ from PIL import ImageFilter
 
 """ Gets font to use on meme
     Note: Webdings purposely doesn't work """
-fonts = ["Choose a font: ", "Arial Bold", "Comic Sans", "Impact", "Pixel", "Webdings"]
+fonts = ["Choose a font: ", "Arial Bold", "BigCaslon", "Brush Script", "Herculanum","Zapfino"]
 def getFont(fontChoice):
     for font in fonts:
         if font == fontChoice:
